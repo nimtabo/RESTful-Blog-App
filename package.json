@@ -19,5 +19,9 @@
     "UI"
   ],
   "author": "mtabo",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
 }
