@@ -22,10 +22,26 @@ let blogSchema = mongoose.Schema({
 });
 let blog = mongoose.model("blog", blogSchema);
 
+blog.create({
+    title: "TEST BLOG",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-P1Jm8TpOV0B8GVfT6PKU3qnmDFTJ0qE3ePPK8aqBa4EXwdSf5w",
+    body: "Hey seee this test is really impressive have a look at it."
+})
+
 // RESTFUL ROUTES
+// ROOT
+app.get("/", function(req, res){
+    res.redirect("/blogs");
+})
 // INDEX
 app.get("/blogs", function(req, res){
-    res.send("index");
+    blog.find({}, function(err, blogs){
+        if(err){
+            console.log("ERROR....");
+        }else{
+            res.render("index", {allblogs: blogs});
+        }
+    });
 });
 
 
