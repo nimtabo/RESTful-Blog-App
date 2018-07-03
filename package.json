@@ -1,0 +1,23 @@
+{
+  "name": "restblog",
+  "version": "1.0.0",
+  "description": "a simple blog app that follows the REST convention ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "RESTful-blog"
+  },
+  "keywords": [
+    "RESTful",
+    "express",
+    "mongoDB",
+    "Node.js",
+    "semantic",
+    "UI"
+  ],
+  "author": "mtabo",
+  "license": "ISC"
+}
