@@ -1,7 +1,11 @@
 let express = require("express"),
-    mongoose = require("mongoose"),
-    bodyparser = require("body-parser"),
-    app = express();
+      mongoose = require("mongoose"),
+      bodyparser = require("body-parser"),
+      app = express();
+      ejsLint = require('ejs-lint');
+    
+let methodOverride = require("method-override");
+
 
 // connect mongodb
 mongoose.connect("mongodb://localhost:27017/restful_blog_app");
@@ -12,6 +16,7 @@ app.set("view engine", "ejs");
 // tell express to look public dir for style sheet
 app.use(express.static("public"));
 app.use(bodyparser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 
 // mongoose/model config
 let blogSchema = mongoose.Schema({
@@ -67,6 +72,28 @@ app.get("/blogs/:id", function(req, res){
         }
     });
 }); 
+
+//EDIT ROUTE
+app.get("/blogs/:id/edit", function(req, res){
+    blog.findById(req.params.id, function(err, foundBlog){
+        if(err){
+            res.redirect("/blogs");
+        }else{
+            res.render("edit", {blog: foundBlog});
+        }
+    });
+});
+
+// UPDATE ROUTE
+app.put("/blogs/:id", function(req, res){
+    blog.findByIdAndUpdate(req.params.id, req.params.blog, function(err, edits){
+        if(err){
+            res.redirect("/blogs");
+        }else{
+            res.redirect("/blogs/" + req.params.id);
+        }
+    });
+});
 
 // server
 app.listen(3000, function(){
