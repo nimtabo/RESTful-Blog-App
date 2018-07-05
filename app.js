@@ -4,6 +4,7 @@ const express = require("express"),
     app = express(),
     ejsLint = require('ejs-lint'),
     methodOverride = require("method-override"),
+    cool = require('cool-ascii-faces'),
     expressSanitizer = require("express-sanitizer");
 
 
@@ -108,6 +109,9 @@ app.delete("/blogs/:id", function(req, res){
         }
     });
 });
+
+// cool route for heroku updates
+app.get('/cool', (req, res) => res.send(cool()));
 
 
 // server
