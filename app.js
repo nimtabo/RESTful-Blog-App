@@ -1,10 +1,9 @@
-let express = require("express"),
-      mongoose = require("mongoose"),
-      bodyparser = require("body-parser"),
-      app = express();
-      ejsLint = require('ejs-lint');
-    
-let methodOverride = require("method-override");
+const express = require("express"),
+    mongoose = require("mongoose"),
+    bodyparser = require("body-parser"),
+    app = express();
+    ejsLint = require('ejs-lint');  
+    methodOverride = require("method-override");
 
 
 // connect mongodb
@@ -86,7 +85,7 @@ app.get("/blogs/:id/edit", function(req, res){
 
 // UPDATE ROUTE
 app.put("/blogs/:id", function(req, res){
-    blog.findByIdAndUpdate(req.params.id, req.params.blog, function(err, edits){
+    blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, edits){
         if(err){
             res.redirect("/blogs");
         }else{
@@ -94,6 +93,12 @@ app.put("/blogs/:id", function(req, res){
         }
     });
 });
+
+// DELETE ROUTE
+app.delete("/blogs/:id", function(req, res){
+    res.send("YOU HAVE REACHED THE DESTROY ROUTE");
+});
+
 
 // server
 app.listen(3000, function(){
