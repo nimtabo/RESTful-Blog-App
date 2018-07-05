@@ -16,3 +16,8 @@ i.icon {
 #delete {
     display: inline;
 }
+
+#copy {
+    text-align: center;
+    margin-top: 20px;
+}
