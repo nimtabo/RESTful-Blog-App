@@ -1,9 +1,10 @@
 const express = require("express"),
     mongoose = require("mongoose"),
     bodyparser = require("body-parser"),
-    app = express();
-    ejsLint = require('ejs-lint');  
-    methodOverride = require("method-override");
+    app = express(),
+    ejsLint = require('ejs-lint'),
+    methodOverride = require("method-override"),
+    expressSanitizer = require("express-sanitizer");
 
 
 // connect mongodb
@@ -15,6 +16,7 @@ app.set("view engine", "ejs");
 // tell express to look public dir for style sheet
 app.use(express.static("public"));
 app.use(bodyparser.urlencoded({extended: true}));
+app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 
 // mongoose/model config
@@ -50,6 +52,7 @@ app.get("/blogs/new", function(req, res){
 app.post("/blogs", function(req, res){
     // Create blog
     // used req.body to automatically take title, image and body of blog from ne form
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     blog.create(req.body.blog, function(err, newBlog){
         if(err){
             res.render("new");
@@ -85,6 +88,7 @@ app.get("/blogs/:id/edit", function(req, res){
 
 // UPDATE ROUTE
 app.put("/blogs/:id", function(req, res){
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, edits){
         if(err){
             res.redirect("/blogs");
